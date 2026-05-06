@@ -460,7 +460,7 @@ if (subtitle) {
 
 /**
  * Cronoshop 4.0 - Sequoia Interaction Engine
- * Versione: Mobile & Tablet Only
+ * Versione: Mobile & Tablet Only con Toggle Tema
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -471,7 +471,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initSequoiaTopbar();
     }
 
-    // Gestione ridimensionamento finestra (se passi da mobile a desktop live)
+    // Gestione ridimensionamento finestra
     window.addEventListener('resize', () => {
         const topBar = document.querySelector('.sequoia-topbar');
         if (!isMobileOrTablet() && topBar) {
@@ -483,10 +483,12 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initSequoiaTopbar() {
-    // Evitiamo duplicati se la funzione viene chiamata più volte
+    // Evitiamo duplicati
     if (document.querySelector('.sequoia-topbar')) return;
 
-    // Iniezione HTML della Topbar direttamente da JS per pulizia
+    // Determiniamo l'icona iniziale in base alla classe sul body
+    const initialIcon = document.body.classList.contains('dark-mode') ? 'light_mode' : 'dark_mode';
+
     const topBarHTML = `
         <header class="sequoia-topbar">
             <div class="topbar-blur-bg"></div>
@@ -498,22 +500,15 @@ function initSequoiaTopbar() {
                     </div>
                 </div>
                 <div class="topbar-right">
-                    <button class="icon-btn search-trigger" id="topSearchBtn">
-                        <span class="material-icons">search</span>
+                    <!-- Toggle Tema Sequoia -->
+                    <button class="icon-btn theme-trigger" id="topThemeBtn">
+                        <span class="material-icons" id="themeIconMobile">${initialIcon}</span>
                     </button>
+                    <!-- Profilo/Info -->
                     <button class="icon-btn profile-trigger" onclick="window.location.href='info.html'">
                         <img src="https://ui-avatars.com/api/?name=Tony&background=2563eb&color=fff" alt="User">
                     </button>
                 </div>
-            </div>
-            
-            <!-- Barra di ricerca espandibile -->
-            <div class="search-overlay-bar" id="searchOverlay">
-                <span class="material-icons">search</span>
-                <input type="text" placeholder="Cerca orologi, brand..." id="searchInput">
-                <button class="close-search" id="closeSearch">
-                    <span class="material-icons">close</span>
-                </button>
             </div>
         </header>
 
@@ -530,7 +525,6 @@ function initSequoiaTopbar() {
                 transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             }
 
-            /* Effetto sfocatura e vetro */
             .topbar-blur-bg {
                 position: absolute;
                 inset: 0;
@@ -541,6 +535,12 @@ function initSequoiaTopbar() {
                 border: 1px solid rgba(255, 255, 255, 0.4);
                 box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
                 z-index: -1;
+            }
+
+            /* Adattamento Dark Mode per la Topbar stessa */
+            body.dark-mode .topbar-blur-bg {
+                background: rgba(15, 23, 42, 0.7);
+                border: 1px solid rgba(255, 255, 255, 0.1);
             }
 
             .topbar-content {
@@ -568,6 +568,8 @@ function initSequoiaTopbar() {
                 letter-spacing: -0.02em;
                 color: #1e293b;
             }
+            
+            body.dark-mode .brand-name { color: #f8fafc; }
 
             .brand-name span {
                 color: #2563eb;
@@ -587,14 +589,20 @@ function initSequoiaTopbar() {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                background: rgba(0, 0, 0, 0.03);
+                background: rgba(0, 0, 0, 0.04);
                 color: #1e293b;
                 transition: all 0.2s ease;
+                border: none;
+                cursor: pointer;
+            }
+            
+            body.dark-mode .icon-btn {
+                background: rgba(255, 255, 255, 0.08);
+                color: #f8fafc;
             }
 
             .icon-btn:active {
                 transform: scale(0.9);
-                background: rgba(0, 0, 0, 0.08);
             }
 
             .profile-trigger img {
@@ -604,43 +612,7 @@ function initSequoiaTopbar() {
                 object-fit: cover;
             }
 
-            /* Logica Ricerca */
-            .search-overlay-bar {
-                position: absolute;
-                inset: 0;
-                background: #fff;
-                border-radius: 22px;
-                display: flex;
-                align-items: center;
-                padding: 0 16px;
-                gap: 12px;
-                transform: scale(0.95);
-                opacity: 0;
-                pointer-events: none;
-                transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-                z-index: 10;
-            }
-
-            .sequoia-topbar.search-active .search-overlay-bar {
-                transform: scale(1);
-                opacity: 1;
-                pointer-events: auto;
-            }
-
-            .search-overlay-bar input {
-                flex: 1;
-                border: none;
-                outline: none;
-                font-size: 1rem;
-                font-weight: 500;
-                background: transparent;
-            }
-
-            .close-search {
-                color: #64748b;
-            }
-
-            /* Nascondi topbar originale se presente per evitare conflitti su mobile */
+            /* Nascondi topbar originale su mobile */
             @media (max-width: 1024px) {
                 .topbar:not(.sequoia-topbar) {
                     display: none !important;
@@ -651,24 +623,35 @@ function initSequoiaTopbar() {
 
     document.body.insertAdjacentHTML('afterbegin', topBarHTML);
 
-    // Gestione Eventi
-    const topbar = document.querySelector('.sequoia-topbar');
-    const searchBtn = document.getElementById('topSearchBtn');
-    const closeBtn = document.getElementById('closeSearch');
-    const searchInput = document.getElementById('searchInput');
+    // Gestione Evento Toggle Tema
+    const themeBtn = document.getElementById('topThemeBtn');
+    const themeIcon = document.getElementById('themeIconMobile');
 
-    searchBtn.addEventListener('click', () => {
-        topbar.classList.add('search-active');
-        setTimeout(() => searchInput.focus(), 100);
-    });
+    themeBtn.addEventListener('click', () => {
+        // Toggle classe dark-mode sul body
+        document.body.classList.toggle('dark-mode');
+        
+        // Cambio icona con animazione micro-interazione
+        const isDark = document.body.classList.contains('dark-mode');
+        themeIcon.style.transform = 'rotate(180deg) scale(0.5)';
+        themeIcon.style.opacity = '0';
+        
+        setTimeout(() => {
+            themeIcon.textContent = isDark ? 'light_mode' : 'dark_mode';
+            themeIcon.style.transform = 'rotate(0) scale(1)';
+            themeIcon.style.opacity = '1';
+        }, 150);
 
-    closeBtn.addEventListener('click', () => {
-        topbar.classList.remove('search-active');
-        searchInput.value = '';
+        // Se esiste la funzione toggleTheme originale nel sito, la chiamiamo per sincronizzare eventuali icone desktop
+        if (typeof toggleTheme === 'function') {
+            // Nota: evitiamo loop infiniti se la funzione originale chiama questa
+        }
     });
 
     // Effetto Hide on Scroll
     let lastScroll = 0;
+    const topbar = document.querySelector('.sequoia-topbar');
+    
     window.addEventListener('scroll', () => {
         const currentScroll = window.pageYOffset;
         if (currentScroll > lastScroll && currentScroll > 100) {
