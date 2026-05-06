@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronoshop</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="darkmode.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <div class="desktop-header" id="desktopHeader">
+    <div class="desktop-toolbar">
+      <div class="desktop-brand">
+        <h1>Cronoshop</h1>
+      </div>
+
+      <div class="desktop-nav-group">
+        <a href="index.html" class="desktop-nav-link active">Prodotti</a>
+        <a href="cart.html" class="desktop-nav-link">Profilo</a>
+      </div>
+
+      <div class="desktop-search-wrap">
+        <span class="material-icons desktop-search-icon">search</span>
+        <input type="text" id="desktopSearchInput" placeholder="Search" aria-label="Cerca prodotti">
+        <button class="desktop-mic" type="button" aria-label="Voice search">
+          <span class="material-icons">mic</span>
+        </button>
+      </div>
+
+      <div class="desktop-action-group">
+        <button class="desktop-pill desktop-theme-pill desktop-theme-btn" type="button" aria-label="Tema">
+          DarkMode
+        </button>
+        <button class="desktop-pill desktop-view-pill view-action" type="button" aria-label="Vista">
+          Vista
+        </button>
+      </div>
+
+      <div class="view-menu-overlay" id="viewMenuOverlay" aria-hidden="true">
+        <div class="view-menu-section">
+          <p class="view-menu-title">Ordina per</p>
+          <button class="view-menu-option" data-sort-option="default">Predefinito</button>
+          <button class="view-menu-option" data-sort-option="price">Prezzo</button>
+          <button class="view-menu-option" data-sort-option="name">Nome</button>
+        </div>
+        <div class="view-menu-section">
+          <p class="view-menu-title">Disposizione</p>
+          <button class="view-menu-option" data-layout-option="grid">Griglia</button>
+          <button class="view-menu-option" data-layout-option="list">Lista</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <h1>Cronoshop</h1>
+        <p class="subtitle">0 prodotti disponibili</p>
+      </div>
+      <div class="top-actions">
+        <button class="top-action" aria-label="Tema">
+          <span class="material-icons top-action-icon">dark_mode</span>
+          <span class="action-label">Tema</span>
+        </button>
+        <button class="view-action" type="button" aria-label="Vista">
+          <span class="material-icons view-icon">view_quilt</span>
+          <span class="action-label">Vista</span>
+        </button>
+      </div>
+    </header>
+
+    <section class="card info-card">
+      <div>
+        <p class="info-label">Prodotti</p>
+        <h2 class="info-title">Esplora i prodotti, aprine uno in dettaglio e aggiungilo al carrello.</h2>
+      </div>
+      <div class="cart-pill">
+        <span class="cart-count" id="cartCount">0</span>
+        <span>Carrello</span>
+      </div>
+    </section>
+
+    <section class="products-panel grid" aria-label="Prodotti">
+      <div class="products-grid"></div>
+    </section>
+
+    <section class="cart-panel hidden" id="cartPanel" aria-label="Carrello">
+      <div class="cart-header">
+        <div>
+          <p class="info-label">Carrello</p>
+          <h2 class="info-title">I tuoi articoli selezionati</h2>
+        </div>
+        <button class="btn secondary" id="emptyCartBtn" type="button">Svuota</button>
+      </div>
+
+      <div class="cart-list" id="cartList"></div>
+
+      <div class="cart-summary">
+        <span>Totale</span>
+        <strong id="cartTotal">€0.00</strong>
+      </div>
+
+      <button class="btn primary" id="checkoutBtn" type="button">Procedi al pagamento</button>
+    </section>
+
+    <section class="profile-panel hidden" id="profilePanel" aria-label="Profilo">
+      <div class="profile-header">
+        <p class="info-label">Profilo</p>
+        <h2 class="info-title">Statistiche e attività</h2>
+      </div>
+      <div class="profile-grid">
+        <div class="profile-stat">
+          <span>Prodotti aperti</span>
+          <strong id="openedCount">0</strong>
+        </div>
+        <div class="profile-stat">
+          <span>Aggiunte al carrello</span>
+          <strong id="addedCount">0</strong>
+        </div>
+        <div class="profile-stat">
+          <span>Prodotti nel carrello</span>
+          <strong id="inCartCount">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <div class="modal-overlay hidden" id="productModal" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <button class="modal-close" aria-label="Chiudi">×</button>
+        <img class="modal-image" src="" alt="Immagine prodotto">
+        <div class="modal-detail">
+          <span class="modal-category"></span>
+          <h3 class="modal-name"></h3>
+          <p class="modal-desc"></p>
+          <div class="modal-pricing">
+            <strong class="modal-price"></strong>
+            <span class="modal-old-price"></span>
+          </div>
+          <div class="modal-actions">
+            <button class="btn primary modal-add">Aggiungi al carrello</button>
+            <a class="btn amazon" id="amazonLink" href="#" target="_blank" rel="noopener noreferrer">
+              <span class="amazon-mark">a</span>
+              Acquista su Amazon
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast hidden" id="toast"></div>
+  </div>
+
+  <div class="tab-bar-wrapper" id="bottomNav">
+    <button class="back-action" aria-label="Indietro">
+      <span class="material-icons">arrow_back</span>
+    </button>
+
+    <!-- Blocco Navigazione -->
+    <nav class="nav-pill">
+      <div class="tab-item active" data-tab="products">
+        <span class="material-icons tab-icon">diamond</span>
+        <span class="tab-label">Products</span>
+      </div>
+      <div class="tab-item" data-tab="cart">
+        <span class="material-icons tab-icon">shopping_cart</span>
+        <span class="tab-label">Cart</span>
+      </div>
+      <div class="tab-item" data-tab="profile">
+        <span class="material-icons tab-icon">person</span>
+        <span class="tab-label">Profile</span>
+      </div>
+    </nav>
+
+    <!-- Bottone Lente Separato -->
+    <div class="search-trigger" onclick="toggleSearch(true)">
+      <span class="material-icons">search</span>
+    </div>
+
+    <!-- Barra di Ricerca a tutta larghezza (nascosta inizialmente) -->
+    <div class="search-full-bar">
+      <input type="text" id="mainSearchInput" placeholder="Search products...">
+      <button class="search-close" type="button" onclick="toggleSearch(false)">✕</button>
+    </div>
+  </div>
+
+  <script defer src="products.js"></script>
+  <script defer src="script.js"></script>
+  <script defer src="darkmode.js"></script>
+</body>
+</html>

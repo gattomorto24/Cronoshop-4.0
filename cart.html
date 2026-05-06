@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronoshop — Profilo</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="darkmode.css">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <div class="desktop-header" id="desktopHeader">
+    <div class="desktop-toolbar">
+      <div class="desktop-brand">
+        <h1>Cronoshop</h1>
+      </div>
+
+      <div class="desktop-nav-group">
+        <a href="index.html" class="desktop-nav-link">Prodotti</a>
+        <a href="cart.html" class="desktop-nav-link active">Profilo</a>
+      </div>
+
+      <div class="desktop-search-wrap">
+        <span class="material-icons desktop-search-icon">search</span>
+        <input type="text" id="desktopSearchInput" placeholder="Search" aria-label="Cerca prodotti">
+        <button class="desktop-mic" type="button" aria-label="Voice search">
+          <span class="material-icons">mic</span>
+        </button>
+      </div>
+
+      <div class="desktop-action-group">
+        <button class="desktop-pill desktop-theme-pill desktop-theme-btn" type="button" aria-label="Tema">
+          DarkMode
+        </button>
+        <button class="desktop-pill desktop-view-pill view-action" type="button" aria-label="Vista">
+          Vista
+        </button>
+      </div>
+
+      <div class="view-menu-overlay" id="viewMenuOverlay" aria-hidden="true">
+        <div class="view-menu-section">
+          <p class="view-menu-title">Ordina per</p>
+          <button class="view-menu-option" data-sort-option="default">Predefinito</button>
+          <button class="view-menu-option" data-sort-option="price">Prezzo</button>
+          <button class="view-menu-option" data-sort-option="name">Nome</button>
+        </div>
+        <div class="view-menu-section">
+          <p class="view-menu-title">Disposizione</p>
+          <button class="view-menu-option" data-layout-option="grid">Griglia</button>
+          <button class="view-menu-option" data-layout-option="list">Lista</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell desktop-cart-shell">
+    <section class="desktop-content-grid">
+      <article class="desktop-card desktop-profile-card">
+        <div>
+          <p class="info-label">Profilo</p>
+          <h2 class="info-title">Statistiche e attività</h2>
+        </div>
+        <div class="profile-grid">
+          <div class="profile-stat">
+            <span>Prodotti aperti</span>
+            <strong id="openedCount">0</strong>
+          </div>
+          <div class="profile-stat">
+            <span>Aggiunte al carrello</span>
+            <strong id="addedCount">0</strong>
+          </div>
+          <div class="profile-stat">
+            <span>Prodotti nel carrello</span>
+            <strong id="inCartCount">0</strong>
+          </div>
+          <div class="profile-stat">
+            <span>Totale spese</span>
+            <strong id="profileTotal">€0.00</strong>
+          </div>
+        </div>
+      </article>
+
+      <article class="desktop-card desktop-cart-card">
+        <div class="cart-header">
+          <div>
+            <p class="info-label">Carrello</p>
+            <h2 class="info-title">I tuoi articoli selezionati</h2>
+          </div>
+          <button class="btn secondary" id="emptyCartBtn" type="button">Svuota</button>
+        </div>
+
+        <div class="cart-list" id="cartList">
+          <div class="cart-empty">Il carrello è vuoto. Aggiungi un prodotto per iniziare.</div>
+        </div>
+
+        <div class="cart-summary">
+          <span>Totale</span>
+          <strong id="cartTotal">€0.00</strong>
+        </div>
+
+        <button class="btn primary" id="checkoutBtn" type="button">Procedi al pagamento</button>
+      </article>
+    </section>
+  </div>
+
+  <script defer src="products.js"></script>
+  <script defer src="script.js"></script>
+  <script defer src="darkmode.js"></script>
+</body>
+</html>

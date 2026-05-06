@@ -1,0 +1,157 @@
+/* --- DARK MODE RE-ENGINEERED PER TONY --- */
+html.dark-mode,
+body.dark-mode {
+  /* Dark mode uniforme per evitare salti di colore sulla pagina */
+  background: #070d1c;
+}
+
+body.dark-mode {
+  color: #f8fafc;
+}
+
+/* 1. ELEVAZIONE: Background differenziati per profondità */
+body.dark-mode .topbar,
+body.dark-mode .nav-pill,
+body.dark-mode .modal-card,
+body.dark-mode .desktop-header {
+  /* Livello 3: Massima elevazione (più chiari) */
+  background: rgba(30, 41, 59, 0.98); 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .topbar,
+body.dark-mode .desktop-header {
+  backdrop-filter: none;
+}
+
+body.dark-mode .topbar::after {
+  background: transparent !important;
+  filter: none !important;
+}
+
+body.dark-mode .card,
+body.dark-mode .product-card,
+body.dark-mode .cart-item,
+body.dark-mode .profile-stat,
+body.dark-mode .desktop-card,
+body.dark-mode .desktop-profile-card,
+body.dark-mode .desktop-cart-card,
+body.dark-mode .desktop-search-wrap,
+body.dark-mode .desktop-nav-group,
+body.dark-mode .desktop-pill,
+body.dark-mode .desktop-view-pill,
+body.dark-mode .desktop-theme-pill {
+  /* Livello 2: Superficie standard */
+  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .desktop-nav-link {
+  color: #cbd5e1;
+}
+
+body.dark-mode .desktop-nav-link.active {
+  background: rgba(56, 189, 248, 0.18);
+  color: #dbeafe;
+  box-shadow: none;
+}
+
+body.dark-mode .desktop-search-wrap input {
+  color: #f8fafc;
+}
+
+body.dark-mode .desktop-search-wrap,
+body.dark-mode .desktop-pill,
+body.dark-mode .view-menu-option {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+body.dark-mode .desktop-pill:hover,
+body.dark-mode .view-menu-option:hover {
+  background: rgba(56, 189, 248, 0.16);
+}
+
+/* 2. TIPOGRAFIA: Contrasto dinamico */
+body.dark-mode h1, 
+body.dark-mode strong,
+body.dark-mode .product-title {
+  color: #ffffff; /* Bianco puro solo per i titoli */
+}
+
+body.dark-mode .subtitle,
+body.dark-mode .modal-desc,
+body.dark-mode .info-label {
+  color: #94a3b8; /* Grigio bluastro per i testi meno importanti (meno fatica visiva) */
+}
+
+/* 3. ACCENTI E BOTTONI */
+body.dark-mode .tab-item.active {
+  color: #38bdf8; /* Un azzurro più brillante per risaltare sul blu scuro */
+  text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+}
+
+body.dark-mode .btn.primary {
+  /* Gradiente meno scuro per non sparire nello sfondo */
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+body.dark-mode .btn.amazon {
+  background: #f59e0b; /* Colore Amazon originale per contrasto immediato */
+  color: #000;
+  font-weight: 700;
+}
+
+/* 4. FIX MODAL & SEARCH */
+body.dark-mode .modal-overlay {
+  background: rgba(2, 6, 23, 0.90); /* Overlay più scuro per focus totale */
+}
+
+body.dark-mode .search-trigger {
+  background: rgba(30, 41, 59, 0.98); 
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.18);
+}
+
+body.dark-mode .search-full-bar {
+  background: rgba(0, 0, 0, 0.98);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.22);
+}
+
+body.dark-mode .search-full-bar input {
+  color: #f8fafc;
+}
+
+body.dark-mode .search-full-bar input::placeholder {
+  color: rgba(248, 250, 252, 0.6);
+}
+
+body.dark-mode .view-menu-overlay {
+  background: rgba(15, 23, 42, 0.96);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+body.dark-mode .view-menu-option {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+}
+
+body.dark-mode .view-menu-option.active,
+body.dark-mode .view-menu-option:hover {
+  background: rgba(56, 189, 248, 0.16);
+  color: #dbeafe;
+  border-color: rgba(56, 189, 248, 0.25);
+}
+
+/* 5. IMMAGINI: Evitiamo l'effetto lampadina */
+body.dark-mode img {
+  filter: brightness(0.9) contrast(1.1); /* Scurisce leggermente le foto per non abbagliare */
+  transition: 0.3s;
+}
+
+body.dark-mode img:hover {
+  filter: brightness(1);
+}
