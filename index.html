@@ -71,16 +71,30 @@
       </div>
     </header>
 
-    <section class="card info-card">
-      <div>
-        <p class="info-label">Prodotti</p>
-        <h2 class="info-title">Esplora i prodotti, aprine uno in dettaglio e aggiungilo al carrello.</h2>
-      </div>
-      <div class="cart-pill">
-        <span class="cart-count" id="cartCount">0</span>
-        <span>Carrello</span>
-      </div>
-    </section>
+<section class="info-container-premium">
+  <div class="info-main-row">
+    <div class="info-text-group">
+      <p class="info-label">Esplora</p>
+      <h2 class="info-title">Trova i prodotti tech, aggiungili al carrello e acquista.</h2>
+    </div>
+    
+    <div class="cart-pill-premium" onclick="setActiveTab('cart')">
+      <div class="cart-badge" id="cartCount">0</div>
+      <span class="cart-text">Carrello</span>
+    </div>
+  </div>
+
+  <div class="promo-banner-glass">
+    <div class="promo-content">
+      <span class="promo-tag">Novità</span>
+      <h3 class="promo-title">Scopri Cronoshop 4.0</h3>
+    </div>
+    <button class="btn-discover" onclick="window.location.href='info.html'">
+      Scopri Ora
+      <span class="material-icons">arrow_forward</span>
+    </button>
+  </div>
+</section>
 
     <section class="products-panel grid" aria-label="Prodotti">
       <div class="products-grid"></div>
